@@ -2,8 +2,12 @@ package ru.naykama.imsdb;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import ru.naykama.imsdb.exception.AlreadyExistException;
+import ru.naykama.imsdb.exception.NotFoundException;
+
+import javax.transaction.Transactional;
 
 import static ru.naykama.imsdb.AccountMapper.convertToDto;
 import static ru.naykama.imsdb.AccountMapper.convertToEntity;
@@ -14,6 +18,7 @@ import static ru.naykama.imsdb.AccountMapper.convertToEntity;
 public class AccountServiceImpl implements AccountService {
     private final AccountRepository repository;
 
+    @Override
     public PersonAccountDto createAccount(PersonAccountDto accountDto) {
         if (repository.existsByAccount(accountDto.getAccount())) {
             log.error("Person with account {} is already exists", accountDto.getAccount());
@@ -21,5 +26,15 @@ public class AccountServiceImpl implements AccountService {
                                                             accountDto.getAccount()));
         }
         return convertToDto(repository.save(convertToEntity(accountDto)));
+    }
+
+    @Override
+    @Transactional
+    public void deleteAccount(long account) {
+        if (!repository.existsByAccount(account)) {
+            log.error("Account {} not found", account);
+            throw new NotFoundException(String.format("Account %d not found", account));
+        }
+        repository.deleteByAccount(account);
     }
 }

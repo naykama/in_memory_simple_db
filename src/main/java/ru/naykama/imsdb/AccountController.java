@@ -2,11 +2,9 @@ package ru.naykama.imsdb;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -24,12 +22,13 @@ public class AccountController {
         return service.createAccount(accountDto);
     }
 
-//    @DeleteMapping("/{account")
-//    public void deleteAccount(@PathVariable long account) {
-//        log.info("Deleting account: {}", account);
-//        service.deleteAccount(account);
-//    }
-//
+    @DeleteMapping("/{account}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAccount(@PathVariable long account) {
+        log.info("Deleting account: {}", account);
+        service.deleteAccount(account);
+    }
+
 //    @PutMapping
 //    public PersonAccountDto updateAccount(@Valid @RequestBody PersonAccountDto accountDto) {
 //        log.info("Updating account: {}", accountDto.getAccount());
