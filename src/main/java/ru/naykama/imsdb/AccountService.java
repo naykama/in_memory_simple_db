@@ -6,6 +6,6 @@ public interface AccountService {
     PersonAccountDto createAccount(PersonAccountDto accountDto);
     void deleteAccount(long account);
 //    PersonAccountDto updateAccount(PersonAccountDto accountDto);
-//    PersonAccountDto getAccountById(long account);
+    PersonAccountDto findAccountById(long account);
 //    List<PersonAccountDto> getAccounts(String name, Double value);
 }

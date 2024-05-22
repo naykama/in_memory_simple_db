@@ -2,7 +2,6 @@ package ru.naykama.imsdb;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import ru.naykama.imsdb.exception.AlreadyExistException;
 import ru.naykama.imsdb.exception.NotFoundException;
@@ -20,7 +19,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public PersonAccountDto createAccount(PersonAccountDto accountDto) {
-        if (repository.existsByAccount(accountDto.getAccount())) {
+        if (repository.existsById(accountDto.getAccount())) {
             log.error("Person with account {} is already exists", accountDto.getAccount());
             throw new AlreadyExistException(String.format("Person with account %d is already exists",
                                                             accountDto.getAccount()));
@@ -31,10 +30,20 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public void deleteAccount(long account) {
-        if (!repository.existsByAccount(account)) {
+        if (!repository.existsById(account)) {
             log.error("Account {} not found", account);
             throw new NotFoundException(String.format("Account %d not found", account));
         }
-        repository.deleteByAccount(account);
+        repository.deleteById(account);
+    }
+
+    @Override
+    public PersonAccountDto findAccountById(long account) {
+        return convertToDto(repository.findById(account)
+                .orElseThrow(() -> {
+                    log.error("Account {} not found", account);
+                    return new NotFoundException(String.format("Account %d not found", account));
+                })
+        );
     }
 }

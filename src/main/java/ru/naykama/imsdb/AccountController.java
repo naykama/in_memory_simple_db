@@ -35,11 +35,11 @@ public class AccountController {
 //        return service.updateAccount(accountDto);
 //    }
 //
-//    @GetMapping("/{account}")
-//    public PersonAccountDto getAccountById(@PathVariable long account) {
-//        log.info("Getting account: {}", account);
-//        return service.getAccountById(account);
-//    }
+    @GetMapping("/{account}")
+    public PersonAccountDto findAccountById(@PathVariable long account) {
+        log.info("Getting account: {}", account);
+        return service.findAccountById(account);
+    }
 //
 //    @GetMapping
 //    public List<PersonAccountDto> getAccounts(@RequestParam(required = false) String name,
