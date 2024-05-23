@@ -3,6 +3,8 @@ package ru.naykama.imsdb;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.naykama.imsdb.dto.AccountUpdateDto;
+import ru.naykama.imsdb.dto.PersonAccountDto;
 import ru.naykama.imsdb.exception.AlreadyExistException;
 import ru.naykama.imsdb.exception.NotFoundException;
 
@@ -55,5 +57,17 @@ public class AccountServiceImpl implements AccountService {
         return repository.findAllByParams(name, minValue, maxValue).stream()
                 .map(AccountMapper::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public PersonAccountDto updateAccount(long account, AccountUpdateDto accountDto) {
+        PersonAccount oldAccount = repository.findById(account).orElseThrow(() -> {
+            log.error("Account {} not found", account);
+            return new NotFoundException(String.format("Account %d not found", account));
+        });
+        PersonAccount updatedAccount = new PersonAccount(account,
+                accountDto.getName() == null ? oldAccount.getName() : accountDto.getName(),
+                accountDto.getValue() == null ? oldAccount.getValue() : accountDto.getValue());
+        return convertToDto(repository.save(updatedAccount));
     }
 }

@@ -1,4 +1,4 @@
-package ru.naykama.imsdb;
+package ru.naykama.imsdb.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

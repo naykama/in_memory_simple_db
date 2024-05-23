@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.naykama.imsdb.dto.AccountUpdateDto;
+import ru.naykama.imsdb.dto.PersonAccountDto;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -30,12 +32,12 @@ public class AccountController {
         service.deleteAccount(account);
     }
 
-//    @PutMapping
-//    public PersonAccountDto updateAccount(@Valid @RequestBody PersonAccountDto accountDto) {
-//        log.info("Updating account: {}", accountDto.getAccount());
-//        return service.updateAccount(accountDto);
-//    }
-//
+    @PatchMapping("/{account}")
+    public PersonAccountDto updateAccount(@PathVariable long account, @RequestBody AccountUpdateDto accountDto) {
+        log.info("Updating account: {}", account);
+        return service.updateAccount(account, accountDto);
+    }
+
     @GetMapping("/{account}")
     public PersonAccountDto findAccountById(@PathVariable long account) {
         log.info("Getting account: {}", account);
