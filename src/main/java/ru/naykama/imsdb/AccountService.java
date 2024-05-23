@@ -7,5 +7,5 @@ public interface AccountService {
     void deleteAccount(long account);
 //    PersonAccountDto updateAccount(PersonAccountDto accountDto);
     PersonAccountDto findAccountById(long account);
-//    List<PersonAccountDto> getAccounts(String name, Double value);
+    List<PersonAccountDto> findAllByParams(String name, Double minValue, Double maxValue);
 }

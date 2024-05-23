@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -40,11 +41,12 @@ public class AccountController {
         log.info("Getting account: {}", account);
         return service.findAccountById(account);
     }
-//
-//    @GetMapping
-//    public List<PersonAccountDto> getAccounts(@RequestParam(required = false) String name,
-//                                             @RequestParam(required = false) Double value) {
-//        log.info("Getting accounts for params: name = {}, value = {}", name, value);
-//        return service.getAccounts(name, value);
-//    }
+
+    @GetMapping
+    public List<PersonAccountDto> findAccounts(@RequestParam(required = false) String name,
+                                              @RequestParam(required = false) Double minValue,
+                                              @RequestParam(required = false) Double maxValue) {
+        log.info("Getting accounts for params: name = {}, minValue = {}, maxValue = {}", name, minValue, maxValue);
+        return service.findAllByParams(name, minValue, maxValue);
+    }
 }

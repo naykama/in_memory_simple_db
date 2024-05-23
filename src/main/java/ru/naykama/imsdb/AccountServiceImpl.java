@@ -8,6 +8,9 @@ import ru.naykama.imsdb.exception.NotFoundException;
 
 import javax.transaction.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static ru.naykama.imsdb.AccountMapper.convertToDto;
 import static ru.naykama.imsdb.AccountMapper.convertToEntity;
 
@@ -45,5 +48,12 @@ public class AccountServiceImpl implements AccountService {
                     return new NotFoundException(String.format("Account %d not found", account));
                 })
         );
+    }
+
+    @Override
+    public List<PersonAccountDto> findAllByParams(String name, Double minValue, Double maxValue) {
+        return repository.findAllByParams(name, minValue, maxValue).stream()
+                .map(AccountMapper::convertToDto)
+                .collect(Collectors.toList());
     }
 }
