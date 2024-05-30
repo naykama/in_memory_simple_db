@@ -46,9 +46,8 @@ public class AccountController {
 
     @GetMapping
     public List<PersonAccountDto> findAccounts(@RequestParam(required = false) String name,
-                                              @RequestParam(required = false) Double minValue,
-                                              @RequestParam(required = false) Double maxValue) {
-        log.info("Getting accounts for params: name = {}, minValue = {}, maxValue = {}", name, minValue, maxValue);
-        return service.findAllByParams(name, minValue, maxValue);
+                                              @RequestParam(required = false) Double value) {
+        log.info("Getting accounts for params: name = {}, value = {}", name, value);
+        return service.findAllByParams(name, value);
     }
 }

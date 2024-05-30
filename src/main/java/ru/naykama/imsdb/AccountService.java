@@ -10,5 +10,5 @@ public interface AccountService {
     void deleteAccount(long account);
     PersonAccountDto updateAccount(long account, AccountUpdateDto accountDto);
     PersonAccountDto findAccountById(long account);
-    List<PersonAccountDto> findAllByParams(String name, Double minValue, Double maxValue);
+    List<PersonAccountDto> findAllByParams(String name, Double value);
 }
