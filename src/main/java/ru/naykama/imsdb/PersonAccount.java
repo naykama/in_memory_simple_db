@@ -1,35 +1,35 @@
 package ru.naykama.imsdb;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.util.Objects;
 
-@Entity
-@Table(name = "accounts")
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
 public class PersonAccount {
-    @Id
+    private long id;
     private long account;
     private String name;
     private double value;
+
+    public PersonAccount(long account, String name, double value) {
+        this.account = account;
+        this.name = name;
+        this.value = value;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PersonAccount)) return false;
-        return account == ((PersonAccount) o).getAccount();
+        return id == ((PersonAccount) o).getId();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(account);
+        return Objects.hash(id);
     }
 }

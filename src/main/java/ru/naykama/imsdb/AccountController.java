@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.naykama.imsdb.dto.AccountUpdateDto;
+import ru.naykama.imsdb.dto.AccountCreateUpdateDto;
 import ru.naykama.imsdb.dto.PersonAccountDto;
 
 import javax.validation.Valid;
@@ -20,34 +20,35 @@ public class AccountController {
     private final AccountService service;
 
     @PostMapping
-    public PersonAccountDto createAccount(@Valid @RequestBody PersonAccountDto accountDto) {
+    public PersonAccountDto createAccount(@Valid @RequestBody AccountCreateUpdateDto accountDto) {
         log.info("Creating account: {}", accountDto.getAccount());
         return service.createAccount(accountDto);
     }
 
-    @DeleteMapping("/{account}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAccount(@PathVariable long account) {
-        log.info("Deleting account: {}", account);
-        service.deleteAccount(account);
+    public void deleteAccount(@PathVariable long id) {
+        log.info("Deleting id: {}", id);
+        service.deleteAccount(id);
     }
 
-    @PatchMapping("/{account}")
-    public PersonAccountDto updateAccount(@PathVariable long account, @RequestBody AccountUpdateDto accountDto) {
-        log.info("Updating account: {}", account);
-        return service.updateAccount(account, accountDto);
+    @PutMapping("/{id}")
+    public PersonAccountDto updateAccount(@PathVariable long id, @RequestBody AccountCreateUpdateDto accountDto) {
+        log.info("Updating account: {}", id);
+        return service.updateAccount(id, accountDto);
     }
 
-    @GetMapping("/{account}")
-    public PersonAccountDto findAccountById(@PathVariable long account) {
-        log.info("Getting account: {}", account);
-        return service.findAccountById(account);
+    @GetMapping("/{id}")
+    public PersonAccountDto findAccountById(@PathVariable long id) {
+        log.info("Getting account: {}", id);
+        return service.findAccountById(id);
     }
 
     @GetMapping
-    public List<PersonAccountDto> findAccounts(@RequestParam(required = false) String name,
-                                              @RequestParam(required = false) Double value) {
-        log.info("Getting accounts for params: name = {}, value = {}", name, value);
-        return service.findAllByParams(name, value);
+    public List<PersonAccountDto> findAccounts(@RequestParam(required = false) Long account,
+                                               @RequestParam(required = false) String name,
+                                               @RequestParam(required = false) Double value) {
+        log.info("Getting accounts for params: account = {}, name = {}, value = {}", account, name, value);
+        return service.findAllByParams(account, name, value);
     }
 }

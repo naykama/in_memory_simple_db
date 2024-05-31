@@ -1,14 +1,14 @@
 package ru.naykama.imsdb;
 
-import ru.naykama.imsdb.dto.AccountUpdateDto;
+import ru.naykama.imsdb.dto.AccountCreateUpdateDto;
 import ru.naykama.imsdb.dto.PersonAccountDto;
 
 import java.util.List;
 
 public interface AccountService {
-    PersonAccountDto createAccount(PersonAccountDto accountDto);
-    void deleteAccount(long account);
-    PersonAccountDto updateAccount(long account, AccountUpdateDto accountDto);
-    PersonAccountDto findAccountById(long account);
-    List<PersonAccountDto> findAllByParams(String name, Double value);
+    PersonAccountDto createAccount(AccountCreateUpdateDto accountDto);
+    void deleteAccount(long id);
+    PersonAccountDto updateAccount(long account, AccountCreateUpdateDto accountDto);
+    PersonAccountDto findAccountById(long id);
+    List<PersonAccountDto> findAllByParams(Long account, String name, Double value);
 }
