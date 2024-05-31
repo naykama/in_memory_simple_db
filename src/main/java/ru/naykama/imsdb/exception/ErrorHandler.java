@@ -22,7 +22,7 @@ public class ErrorHandler {
         return new ErrorResponse("Ошибка валидации");
     }
 
-    @ExceptionHandler({IllegalArgumentException.class, AlreadyExistException.class})
+    @ExceptionHandler({IllegalArgumentException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse argumentException(final Exception e) {
         log.error("Ошибка 400 в аргументах запроса {}", e.getMessage());
