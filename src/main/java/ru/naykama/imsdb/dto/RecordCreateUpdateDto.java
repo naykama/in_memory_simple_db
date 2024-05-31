@@ -2,17 +2,19 @@ package ru.naykama.imsdb.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @Getter
-public class AccountCreateUpdateDto {
+@ToString
+public class RecordCreateUpdateDto {
     @NotNull(message = "Account is required")
-    private Long account;
+    private final Long account;
     @NotBlank(message = "Name is required")
-    private String name;
+    private final String name;
     @NotNull(message = "Value is required")
-    private Double value;
+    private final Double value;
 }
